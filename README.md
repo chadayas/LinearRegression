@@ -23,7 +23,8 @@ the mean, which could hinder predictions.
 ## Our friend Mr.Partial Derivative
 Take the PD of $\beta_1$ and $\beta_0$
 
-$$\frac{\partial Q}{\partial \beta_0} = \sum_{i=1}^^n -2(Y_i - \beta_0 - \beta_1X_i) \\
+$$\frac{\partial Q}{\partial \beta_0} = \sum_{i=1}^^n -2(Y_i - \beta_0 - \beta_1X_i)$$ 
 
-\frac{\partial Q}{\partial \beta_1} = \sum_{i=1}^^n -2X_i(Y_i - \beta_0 - \beta_1X_i)$$
-                                                                                        
+$$\frac{\partial Q}{\partial \beta_1} = \sum_{i=1}^^n -2X_i(Y_i - \beta_0 - \beta_1X_i)$$
+                                                                                      
+
