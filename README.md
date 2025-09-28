@@ -16,14 +16,14 @@ random variable such that $Y_i \sim N(\beta_0 + \beta_1X_i, \sigma^2)$. Remeber;
 $\mathbb{E}[\epsilon_i] = 0$ from our assumption. We can write our least squares equation $Q$ as this.
 
 $$Q = \sum_{i=1}^n (Y_i - (\beta_0 +\beta_1X_i ))^2$$
+
 The goal is too minimize $Q$ in order to keep our model relatively stable, a high value of $Q$ states higher deviations away from
 the mean, which could hinder predictions.
 
 ## Our friend Mr.Partial Derivative
 Take the PD of $\beta_1$ and $\beta_0$
-\[
+```math
 \frac{\partial Q}{\partial \beta_0} = \sum_{i=1}^^n -2(Y_i - \beta_0 - \beta_1X_i) \\
 
 \frac{\partial Q}{\partial \beta_1} = \sum_{i=1}^^n -2X_i(Y_i - \beta_0 - \beta_1X_i)
-
-\]
+```
