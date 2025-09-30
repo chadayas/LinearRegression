@@ -62,9 +62,14 @@ class linereg():
             res = f""""""
    
     def anova(self):
-        dict_summary = {'Regression': {'SSR' :self.SSR.item(), 'df': 1, 'MSR': self.SSR.item()},
-                        'Error': {'SSE': self.SSE.item(), 'df': self.n - 2, 'MSE': self.MSE.item()},
-                        'Total': {'SSTo': self.SSTo.item(), 'df total':self.n - 1 },
+        dict_summary = {'Regression': {'SSR' :self.SSR.item(), 
+                                       'df': 1, 
+                                       'MSR': self.SSR.item()},
+                        'Error': {'SSE': self.SSE.item(), 
+                                  'df': self.n - 2, 
+                                  'MSE': self.MSE.item()},
+                        'Total': {'SSTo': self.SSTo.item(), 
+                                  'df total':self.n - 1 },
                         'F-stat' : (self.SSR/self.MSE).item()
         }
         
