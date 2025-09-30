@@ -17,16 +17,12 @@ with open('bmw_saless.csv', newline="") as csvfile:
 data = np.column_stack(
     [np.array(price, dtype=np.float64), 
      np.array(sales, dtype = np.float64)] ) # (50,000x2) matrix instead of pandas table.
-'''
-plt.scatter(data[:,0][:100] , data[:, 1][:100],)
-plt.xlabel('price')
-plt.ylabel('sales')
-plt.show()
-'''
+
 
 class linereg():
     def __init__(self, data):
         self.data = data
+
     def linear_ests(self):
        # Our unfitted model is Y_i = Beta_0 + Beta_1X_i + Ep_i
        # proof of b_1 and b_0 is in the README.md 
@@ -49,7 +45,7 @@ class linereg():
         self.Y_hat = self.b_0 + self.b_1 * self.X_i
         
         self.e_i = self.Y_i - (self.Y_hat)
-        self.MSE = self.e_i**2 / df  
+        self.MSE = np.sum(self.e_i**2) / df  
 
         # point esitmate of population standard deviation
         self.samp_std = np.sqrt(self.MSE)     
@@ -61,25 +57,21 @@ class linereg():
        # We may be interested in making inferences on our slope
        # or our intercept. proof of variance of slope in README.md
        # H_0 :  \beta_1 = 0 , H_a: \beta_1 > 0
-        self.var_b1 = self.MSE/np.sum((self.X_i - np.mean(self.X_i))**2) 
-        self.std_b1 = np.sqrt(self.var_b1)
-
-        if alpha == 0.05:
+      if alpha == 0.05:
             # making a probability statement whether our slope
             res = f""""""
    
     def anova(self):
-        
-        anova_table = {
-            
-    'source'     : ['sum of squares', 'df', 'mse', 'F-stat'],
-    'regression' : [self.SSR.item(), 1, self.SSR.item(), (self.SSR/self.SSE).item()],
-    'error'      : [self.SSE.item(), self.n - 2, (self.SSE/(self.n - 2)).item(), ''],
-    'total'      : [self.SSTo.item(), 1 + self.n-2, '', '']
+        dict_summary = {'Regression': {'SSR' :self.SSR.item(), 'df': 1, 'MSR': self.SSR.item()},
+                        'Error': {'SSE': self.SSE.item(), 'df': self.n - 2, 'MSE': self.MSE.item()},
+                        'Total': {'SSTo': self.SSTo.item(), 'df total':self.n - 1 },
+                        'F-stat' : (self.SSR/self.MSE).item()
         }
-        for key, val in anova_table.items():
-            print(key,val)
-
+        
+        anova_table = json.dumps(dict_summary, indent=4)
+        
+        return anova_table
+    
     def compute_rstat(self, r_sq=True):
         # computes r^2 by default but when r_sq if false
         # returns corr coffecicent r
@@ -90,11 +82,30 @@ class linereg():
             return np.sqrt(r_squared)
 
     def summary(self):
-        summary = f''
+        s_xx = np.sum((self.X_i - np.mean(self.X_i))**2)
+        self.var_b1 = self.MSE/s_xx        
+        self.std_b1 = np.sqrt(self.var_b1)
+        
+        self.var_b0 = self.MSE*((1/self.n) + (np.mean(self.X_i)**2 / s_xx) )
+        self.std_b0 = np.sqrt(self.var_b0)
+         
+        t_val_b0, t_val_b1 = self.b_0/self.std_b0, self.b_1/self.std_b1
+        topics = {'Estimate' :{'intercept': f'{self.b_0.item():.7f}', 
+                                'slope (b_1)': f'{self.b_1.item():.7f}'
+                               },
+                  'Std. Error':{'intercept':f'{self.std_b0:.7f}', 
+                                'slope (b_1)': f'{self.std_b1:.7f}'
+                                },
+                   't-value' : {'intercept': f'{t_val_b0:.7f}', 
+                                'slope (b_1)': f'{t_val_b1:.7f}'
+                                }
+                   } 
+        summary = json.dumps(topics, indent=4)
+        return summary
 
 model = linereg(data)
 params = model.linear_ests()
 resid = model.resid()
 anova = model.anova()
-print(params)
-print('\n', anova)
+summ = model.summary()
+print(summ)
