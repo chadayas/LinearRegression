@@ -1,0 +1,77 @@
+\documentclass{article}
+
+
+\usepackage[left=0.5in, right=0.5in, top=1in, bottom=1in]{geometry} % Specific margins
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+
+
+\begin{document}
+ \hfill \textbf{\huge Some proofs}   \hfill  \textbf{\large 
+	Chad } 
+	\rule{19.5cm}{0.8pt} 
+
+
+	The kaTex rendering for\verb|.md| files is horrendus, 
+	thus here is a nicer \LaTeX \ format 
+
+	
+\section{Simple Linear Regresion model}
+	
+	We define our SLR model. 
+\begin{equation}
+ Y_i = \beta_0 + \beta_1X_i + \epsilon_i
+\end{equation}
+	
+\noindent Where $Y_i$ is our response variable, $\beta_1$ and $\beta_0$ is both 
+our parameters and $\epsilon_i$ is the random error term.
+We can start off with our assummptions for SLR, 
+which are $\epsilon_i \overset{i.i.d}{\sim} N(0, \sigma^2)$. Since $\epsilon_i$ is a
+random variable with an assumed Gaussian distribution, It is obvious to see that $Y_i$ 
+is then a random variable from the Gaussian distribution. Such that
+\begin{equation} \tag{1.2}
+Y \sim N(\beta_0 + \beta_1X_i, \sigma^2)
+\end{equation}
+
+\noindent To find this is trival, we take the expected value of $Y_i$ such that 
+$$\mathbb{E}[Y_i]= \mathbb{E}[\beta_0 + \beta_1X_i + \epsilon_i]
+= \mathbb{E}[\beta_0] + \mathbb{E}[\beta_1X_i] + \mathbb{E}[\epsilon_i] = 
+\beta_0 + \beta_1X_i
+$$
+\begin{equation} \tag{1.3}
+	\mathbb{E}[Y_i] = \beta_0 + \beta_1X_i 
+\end{equation}
+$X_i$ is our known constant, $\beta_0$ and $\beta_1$ are the unknown constants, and
+$\epsilon_i$ is assumed to have $\mathbb{E}[\epsilon_i] = 0$. 
+
+\subsection{Least Squares method}
+	
+\noindent We are sometimes interested in the observed values deviation 
+	from its mean to distinguish the variabillity 
+	within the distribution of $Y_i$. Let $Q$ define the least squares equation 
+	for $Y_i$.
+
+\begin{equation} \tag{1.4}
+		Q = \sum_{i=1}^n (Y_i - \mathbb{E}[Y_i])^2
+\end{equation}
+A high $Q$ indicates high variability within the observed values, this 
+is a cause of problems for when building a model to draw predictions. We 
+can minimize $Q$ w.r.t the regression model parameters. In order to do this
+we borrow the equation from $(1.3)$ and set the partial derivative equal to
+zero.
+\begin{equation} \tag{1.5.1}
+	\frac{\partial Q}{\partial \beta_1} = -2\sum_{i=1}^n X_i(Y_i - 
+	\beta_0-\beta_1X_i) = 0
+\end{equation} \\
+\begin{equation} \tag{1.5.2}
+\frac{\partial Q}{\partial \beta_0} = -2\sum_{i=1}^n (Y_i - 
+	\beta_0-\beta_1X_i) = 0 
+\end{equation}
+
+\noindent We apply the chain rule. From the above equations, we derive the 
+normal equations and the linear estimators $b_1$ and $b_0$.
+
+
+\end{document}

@@ -108,9 +108,11 @@ class linereg():
         summary = json.dumps(topics, indent=4)
         return summary
 
+
+
 model = linereg(data)
 params = model.linear_ests()
 resid = model.resid()
 anova = model.anova()
 summ = model.summary()
-print(summ)
+print(summary)
