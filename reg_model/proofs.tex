@@ -46,14 +46,14 @@ $$
 $X_i$ is our known constant, $\beta_0$ and $\beta_1$ are the unknown constants, and
 $\epsilon_i$ is assumed to have $\mathbb{E}[\epsilon_i] = 0$. 
 
-\subsection{Least Squares method}
+\subsection{Least Squares method} \tag{1.4}
 	
 \noindent We are sometimes interested in the observed values deviation 
 	from its mean to distinguish the variabillity 
 	within the distribution of $Y_i$. Let $Q$ define the least squares equation 
 	for $Y_i$.
 
-\begin{equation} \tag{1.4}
+\begin{equation} \tag{1.4.1}
 		Q = \sum_{i=1}^n (Y_i - \mathbb{E}[Y_i])^2
 \end{equation}
 A high $Q$ indicates high variability within the observed values, this 
@@ -70,8 +70,25 @@ zero.
 	\beta_0-\beta_1X_i) = 0 
 \end{equation}
 
-\noindent We apply the chain rule. From the above equations, we derive the 
-normal equations and the linear estimators $b_1$ and $b_0$.
+\noindent We apply the chain rule. From the above equations, we can
+derive the normal equations and the linear estimators $b_1$ and $b_0$. We
+will conceal the index of the sums from here on out. Below is the first 
+normal equation.
+\begin{align*}
+	  -2\sum X_i(Y_i - \beta_0-\beta_1X_i) = 0 \\
+	 \sum (Y_iX_i - b_0X_i - b_1X_i^2) = 0  \\
+	 \sum Y_iX_i - b_0\sum X_i - b_1\sum X_i^2 =  0  \\ \\
+	\sum Y_iX_i = b_0\sum X_i - b_1 \sum X_i^2 \quad \quad (1.6.1)  
+\end{align*}
 
+\begin{align*}
+	  -2\sum (Y_i - \beta_0-\beta_1X_i) = 0 \\
+	 \sum (Y_i - b_0 - b_1X_i) = 0  \\
+	 \sum Y_i - nb_0 - b_1\sum X_i =  0  \\ \\
+	\sum Y_i = nb_0 - b_1 \sum X_i \quad \quad (1.6.2)  
+\end{align*}
 
+(1.6.1) & (1.6.2) are the derived normal equations.
+
+\section{Least Square Estimators}
 \end{document}
