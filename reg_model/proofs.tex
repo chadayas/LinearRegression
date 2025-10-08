@@ -78,17 +78,57 @@ normal equation.
 	  -2\sum X_i(Y_i - \beta_0-\beta_1X_i) = 0 \\
 	 \sum (Y_iX_i - b_0X_i - b_1X_i^2) = 0  \\
 	 \sum Y_iX_i - b_0\sum X_i - b_1\sum X_i^2 =  0  \\ \\
-	\sum Y_iX_i = b_0\sum X_i - b_1 \sum X_i^2 \quad \quad (1.6.1)  
+	\sum Y_iX_i = b_0\sum X_i + b_1 \sum X_i^2 \quad \quad (1.6.1)  
 \end{align*}
 
 \begin{align*}
 	  -2\sum (Y_i - \beta_0-\beta_1X_i) = 0 \\
 	 \sum (Y_i - b_0 - b_1X_i) = 0  \\
 	 \sum Y_i - nb_0 - b_1\sum X_i =  0  \\ \\
-	\sum Y_i = nb_0 - b_1 \sum X_i \quad \quad (1.6.2)  
+	\sum Y_i = nb_0 + b_1 \sum X_i \quad \quad (1.6.2)  
 \end{align*}
 
 (1.6.1) & (1.6.2) are the derived normal equations.
 
 \section{Least Square Estimators}
+
+	Directly from our normal equation we can derive ourlinear estimators, 
+	which by the Gauss-Markov Theorem, OLS estimators are BLUE - best linear 
+	unbiased estimators, among all linear ubiased estimators. 
+	
+   \subsection{Deriving our linear estimators}
+	\begin{align*}
+		\sum Y_i &= nb_0 + b_1 \sum X_i \quad \quad (\text{rearrange the
+		equation.}) \\
+			b_0 &= \frac{1}{n}(\sum Y_i -b_1\sum X_i) \\ 
+			b_0 &= \bar{Y} - b_1\bar{X}
+	\end{align*}
+
+	We can use this equation for $b_0$ to find $b_1$
+	\begin{align*}
+		\sum Y_iX_i &= b_0\sum X_i + b_1 \sum X_i^2 \quad \quad (\text{
+			replace $b_0$ with its equation.}) \\
+		\sum Y_iX_i &= (\frac{1}{n}\sum Y_i - b_1\frac{1}{n}\sum X_i)
+		\sum X_i + b_1 \sum X_i^2 \\ 
+		\sum Y_iX_i &= \frac{1}{n}\sum Y_iX_i - b_1\frac{1}{n}\sum X_i^2
+		 + b_1 \sum X_i^2 \\ 
+		\sum Y_iX_i - \frac{1}{n}\sum Y_iX_i &= - b_1\bigg(\frac{1}{n}
+		\sum X_i^2 - \sum X_i^2\bigg) \quad \quad (\text{
+			rearrange the equation.}) \\
+		b_1 &=\frac{\sum Y_iX_i - \frac{1}{n}\sum Y_iX_i}{\frac{1}{n} 
+		\sum X_i^2 - \sum X_i^2}
+	\end{align*}
+
+
+
+
+
+
+		
+
+
+
+
+
+
 \end{document}

@@ -1,24 +1,8 @@
 import numpy as np 
-import csv
 import json
 from scipy.stats import t
-file = 'bmw_saless.csv'
 
-sales, price = [],[]
-
-
-with open('bmw_saless.csv', newline="") as csvfile:
-    data = csv.DictReader(csvfile)
-    for row in data:
-       price.append(row['Price_USD'])
-       sales.append(row['Sales_Volume'])
-
-data = np.column_stack(
-    [np.array(price, dtype=np.float64), 
-     np.array(sales, dtype = np.float64)] ) # (50,000x2) matrix instead of pandas table.
-
-
-class linereg():
+class LineReg():
     def __init__(self, data):
         self.data = data
 
@@ -28,13 +12,16 @@ class linereg():
         self.n = self.data.shape[0]
         self.X_i, self.Y_i = self.data[:, 0] ,  self.data[:, 1]
         
-        self.b_1 = ((np.sum(self.X_i *self.Y_i) - np.mean(self.Y_i)*np.sum(self.X_i))
-                    /(np.sum(self.X_i**2) - np.mean(self.X_i) * np.sum(self.X_i))
+        self.b_1 = ((np.sum(self.X_i *self.Y_i) 
+                    - np.mean(self.Y_i)*np.sum(self.X_i))
+                    / (np.sum(self.X_i**2) - np.mean(self.X_i) 
+                    * np.sum(self.X_i))
                      )
         self.b_0 = np.mean(self.Y_i) - self.b_1*np.mean(self.X_i)
         self.params = json.dumps({'intercept' : f'{self.b_0:.10f}',
-                       'slope (price)': f'{self.b_1:.10f}' 
-                       }, indent=4)
+                                'slope (price)': f'{self.b_1:.10f}' 
+                                }, 
+                                indent=4)
         return self.params
     
     def resid(self):
@@ -54,10 +41,12 @@ class linereg():
 
     def summary(self):
         s_xx = np.sum((self.X_i - np.mean(self.X_i))**2)
+        
         self.var_b1 = self.MSE/s_xx        
         self.std_b1 = np.sqrt(self.var_b1)
         
-        self.var_b0 = self.MSE*((1/self.n) + (np.mean(self.X_i)**2 / s_xx) )
+        self.var_b0 = self.MSE*((1/self.n) + (np.mean(self.X_i)**2 / 
+                        s_xx) )
         self.std_b0 = np.sqrt(self.var_b0)
          
         t_val_b0, t_val_b1 = self.b_0/self.std_b0, self.b_1/self.std_b1
